@@ -11,7 +11,6 @@ flutter:
   assets:
     - assets/cubing/
     - assets/
-    - assets/html/
 
 # Scripts to be run with rps
 scripts:
