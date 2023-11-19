@@ -25,3 +25,13 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+/pubspec.lock.hold
+**/doc/api/
+
+junk
+hold
+
+*\.freezed\.dart
+*\.g\.dart
+*\.mocks\.dart
+firebase_options.dart

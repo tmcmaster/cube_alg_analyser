@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cube_alg_analyser.iml" filepath="$PROJECT_DIR$/cube_alg_analyser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/cube_alg_analyser_android.iml" filepath="$PROJECT_DIR$/android/cube_alg_analyser_android.iml" />
+    </modules>
+  </component>
+</project>
