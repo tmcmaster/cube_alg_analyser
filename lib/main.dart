@@ -1,58 +1,70 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:cube_alg_analyser/cubing_algs.dart';
-import 'package:cube_alg_analyser/model/algorithm.dart';
-import 'package:cube_alg_analyser/sequence_finder.dart';
+import 'package:cube_alg_analyser/screen/landing_page.dart';
+import 'package:cube_alg_analyser/screen/settings_screen.dart';
+import 'package:cube_alg_analyser/screen/test_cube_page.dart';
 import 'package:flutter/material.dart';
-import 'package:wt_models/wt_models.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:wt_app_scaffold/app_scaffolds.dart';
+import 'package:wt_app_scaffold/models/app_styles.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('OLL Cases'),
-        ),
-        body: const Column(
-          children: [
-            Expanded(
-              child: CubingAlgs(),
-            ),
-          ],
-        ),
-      ),
+  runMyApp(
+    withAppScaffold(
+      appDefinition: CubeAlgAnaliser.definition,
+      appDetails: CubeAlgAnaliser.details,
+      appStyles: CubeAlgAnaliser.styles,
     ),
   );
 }
 
-void testing() {
-  final ollAlgList = (json.decode(
-    File('./lib/cubing/data/oll_cases.json').readAsStringSync(),
-  ) as List<JsonMap>)
-      .map((e) => Algorithm.fromJson(e))
-      .whereType<Algorithm>()
-      .toList();
+mixin CubeAlgAnaliser {
+  static final details = Provider<AppDetails>(
+    name: 'App Details',
+    (ref) => AppDetails(
+      title: 'Cube Algorithm Analyser',
+      subTitle: '',
+      iconPath: 'assets/wt_logo.png',
+    ),
+  );
 
-  final ollIndex = {for (final a in ollAlgList) a.id: a};
+  static final definition = Provider<AppDefinition>(
+    name: 'App Definition',
+    (ref) => AppDefinition.from(
+      appTitle: 'Cube Algorithm Analyser',
+      appName: 'CubeAlgorithmAnalyser',
+      swipeEnabled: true,
+      includeAppBar: true,
+      appDetailsProvider: details,
+      applicationType: ApplicationType.goRouterMenu,
+      pages: [
+        PageDefinition(
+          title: 'Landing Page',
+          icon: FontAwesomeIcons.cube,
+          debug: false,
+          builder: (_, __, ___) => const LandingPage(),
+          primary: true,
+          scaffoldType: ScaffoldType.transparentCard,
+        ),
+        PageDefinition(
+          title: 'Settings',
+          icon: Icons.settings,
+          primary: true,
+          scaffoldType: ScaffoldType.transparentCard,
+          builder: (context, __, ___) => const SettingsScreen(),
+        ),
+        PageDefinition(
+          title: 'Test',
+          icon: FontAwesomeIcons.triangleExclamation,
+          primary: true,
+          scaffoldType: ScaffoldType.transparentCard,
+          builder: (context, __, ___) => const TestCubePage(),
+        ),
+      ],
+    ),
+  );
 
-  final sequenceMap = const SequenceFinder(
-    minCount: 4,
-  ).findAll(ollAlgList);
-
-  // print(sequenceMap.entries.map((e) => '${e.key}  :  ${e.value}').join('\n'));
-
-  // print(alg);
-  // print(alg.reverse);
-  // print(alg.rotate(Rotation.y));
-  // print(alg.rotate(Rotation.yPrime));
-
-  final sequenceList = sequenceMap.keys.toList();
-  for (final alg in ollAlgList) {
-    print(
-        '${alg.id} : ${alg.group} : ${SequenceFinder.replace(alg.moves, sequenceList)}');
-  }
-
-  print(ollIndex[55]);
+  static final styles = Provider<AppStyles>(
+    name: 'AppTwo Styles',
+    (ref) => GoRouterMenuApp.styles,
+  );
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example 3x3 Cube</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="./jquery.cube.threejs.js"></script>
+    <script>
+    window.onload = () => {
+        var alg = decodeURIComponent(window.location.search.substring(1));
+        document.getElementById('aa').dataset.moves = alg;
+        $(function(){
+            $(".cube").cube({
+                animation: {
+                    delay: 800
+                }
+            });
+        });
+    };
+
+    </script>
+
+    <style>
+        .cube {
+                width: 500px;
+                height: 500px;
+        }
+    </style>
+</head>
+<body>
+<!--<div class="cube" data-moves="(U R U' R') (U R U' R') (U R U' R') (U R U' R') (U R U' R') (U R U' R')"></div>-->
+<div id="aa" class="cube" data-moves="(U R U' R') (R U R' U')"></div>
+</body>
+</html>

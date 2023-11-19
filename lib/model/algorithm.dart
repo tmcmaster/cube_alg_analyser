@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'package:cube_alg_analyser/rotation.dart';
+import 'package:cube_alg_analyser/model/rotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wt_models/wt_models.dart';
 
@@ -26,7 +26,7 @@ class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
     @Default([]) List<int> stickers,
   }) = _Algorithm;
 
-  const Algorithm._() : super();
+  Algorithm._() : super();
 
   factory Algorithm.empty() => Algorithm();
 
@@ -41,6 +41,8 @@ class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
 
   @override
   List<String> getTitles() => convert.titles();
+
+  bool get isAnnotated => moves.contains('[');
 
   String get reverse => moves
       .split(' ')
