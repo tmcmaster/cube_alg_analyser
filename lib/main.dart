@@ -38,8 +38,8 @@ mixin CubeAlgAnaliser {
       applicationType: ApplicationType.goRouterMenu,
       pages: [
         PageDefinition(
-          title: 'Landing Page',
-          icon: FontAwesomeIcons.cube,
+          title: 'Algorithms',
+          icon: Icons.abc,
           debug: false,
           builder: (_, __, ___) => const LandingPage(),
           primary: true,
@@ -53,11 +53,12 @@ mixin CubeAlgAnaliser {
           builder: (context, __, ___) => const SettingsScreen(),
         ),
         PageDefinition(
-          title: 'Test',
-          icon: FontAwesomeIcons.triangleExclamation,
-          primary: true,
+          name: 'cube',
+          title: 'Cube',
+          icon: FontAwesomeIcons.cube,
+          primary: false,
           scaffoldType: ScaffoldType.transparentCard,
-          builder: (context, __, ___) => const TestCubePage(),
+          builder: (context, __, state) => TestCubePage.fromState(state),
         ),
       ],
     ),

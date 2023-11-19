@@ -1,8 +1,10 @@
 import 'package:cube_alg_analyser/model/algorithm.dart';
 import 'package:cube_alg_analyser/widget/sticker_case.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wt_app_scaffold/app_scaffolds.dart';
 
-class AlgorithmWidget extends StatelessWidget {
+class AlgorithmWidget extends ConsumerWidget {
   final Algorithm algorithm;
 
   const AlgorithmWidget({
@@ -11,7 +13,7 @@ class AlgorithmWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     return SizedBox(
       height: 150,
@@ -47,11 +49,19 @@ class AlgorithmWidget extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      algorithm.moves,
-                      style: textTheme.titleLarge,
+                  GestureDetector(
+                    onTap: () {
+                      ref.read(GoRouterMenuApp.goRouter).push(
+                            '/cube',
+                            extra: algorithm.moves,
+                          );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Text(
+                        algorithm.moves,
+                        style: textTheme.titleLarge,
+                      ),
                     ),
                   ),
                 ],
