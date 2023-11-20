@@ -3,20 +3,20 @@ import 'package:go_router/go_router.dart';
 import 'package:webview_universal/webview_universal.dart';
 import 'package:wt_app_scaffold/app_scaffolds.dart';
 
-class TestCubePage extends StatefulWidget {
+class CubePage extends StatefulWidget {
   final String moves;
-  const TestCubePage({
+  const CubePage({
     super.key,
     required this.moves,
   });
 
   @override
-  State<TestCubePage> createState() => _TestCubePageState();
+  State<CubePage> createState() => _CubePageState();
 
-  factory TestCubePage.fromState(GoRouterState? state) {
+  factory CubePage.fromState(GoRouterState? state) {
     if (state != null && state.extra != null) {
       final moves = Uri.encodeFull(state.extra! as String);
-      return TestCubePage(
+      return CubePage(
         moves: moves,
       );
     } else {
@@ -25,7 +25,7 @@ class TestCubePage extends StatefulWidget {
   }
 }
 
-class _TestCubePageState extends State<TestCubePage> {
+class _CubePageState extends State<CubePage> {
   static const String baseUrl =
       'https://tmcmaster.github.io/cube_alg_analyser/';
   // static const String baseUrl = 'http://localhost:8000';
@@ -50,7 +50,7 @@ class _TestCubePageState extends State<TestCubePage> {
         child: FittedBox(
           child: SizedBox(
             width: 520,
-            height: 520,
+            height: 650,
             child: RestrictedWebView(
               backgroundColor: Colors.transparent,
               url: '$baseUrl/cube/index.html?${widget.moves}',

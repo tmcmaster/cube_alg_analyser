@@ -6,13 +6,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
     <script src="./jquery.cube.threejs.js"></script>
     <script>
+    function appendButton(nav, move){
+        var buttonEl = document.createElement("button");
+        buttonEl.innerHTML = move;
+        buttonEl.onclick = () => {
+            turn(move)
+        };
+        nav.appendChild(buttonEl);
+   }
+
+    function play() {
+        if (!window.executingMoves) {
+            window.executingMoves = true;
+            window.cube.execute(window.alg);
+        }
+    }
+
+    function reset() {
+        if (!window.executingMoves) {
+            window.cube.reset();
+        }
+    }
+
+    function turn(move) {
+        if (!window.executingMoves) {
+            window.cube.turn(move);
+        }
+    }
+
     window.onload = () => {
         var alg = decodeURIComponent(window.location.search.substring(1));
-        document.getElementById('aa').dataset.moves = alg;
+<!--        document.getElementById('cube').dataset.moves = alg;-->
+        window.alg = alg;
+        document.getElementById('alg').innerText = alg;
+
+        const moves = [
+            ["L","L'","l","l'"],
+            ["F","F'","f","f'"],
+            ["D","D'","d","d'"],
+            ["X","X'","S", "S'"],
+            ["Y","Y'","M", "M'"],
+            ["Z","Z'","E", "E''"],
+            ["U","U'","u","u'"],
+            ["B","B'","b","b'"],
+            ["R","R'","r","r'"],
+        ];
+        const nav = document.getElementById('buttons');
+
+        for (let i in moves) {
+            var div = document.createElement("div");
+            nav.appendChild(div);
+            for (let m in moves[i]) {
+                appendButton(div, moves[i][m]);
+            }
+        }
+
         $(function(){
-            $(".cube").cube({
+            window.cube = $(".cube").cube({
                 animation: {
                     delay: 800
+                },
+                onComplete: () => {
+                    console.log('Completed');
+                    window.executingMoves = false;
                 }
             });
         });
@@ -23,12 +79,60 @@
     <style>
         .cube {
                 width: 500px;
-                height: 500px;
+                height: 400px;
+        }
+        button {
+            background: transparent;
+            margin-right: 4px;
+            font-size: 20px;
+            margin: 2px;
+            padding: 2px;
+            border-radius: 8px;
+            border: 2px solid grey;
+            cursor: pointer;
+            min-width: 30px;
+        }
+        div.container {
+            width: 500px;
+            height: auto;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .centered {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          max-width: 500px;
+        }
+
+        #buttons > div {
+            display: flex;
+            flex-direction: column; /* Set the direction to column for vertical flow */
+            align-items: center; /* Optional: Center children horizontally */
+            justify-content: center;
+            padding: 0 4px 0 4px;
+        }
+        h3 {
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        div.play {
+            margin-bottom: 4px;
         }
     </style>
 </head>
 <body>
-<!--<div class="cube" data-moves="(U R U' R') (U R U' R') (U R U' R') (U R U' R') (U R U' R') (U R U' R')"></div>-->
-<div id="aa" class="cube" data-moves="(U R U' R') (R U R' U')"></div>
+<h3 id="alg"></h3>
+<div class="container">
+    <div class="centered play">
+        <button class="centered" onclick="play()">Play</button>
+        <button class="centered" onclick="reset()">Reset</button>
+    </div>
+</div>
+<div class="container">
+    <div id="buttons" class="centered"></div>
+    <div id="cube" class="cube centered" data-moves=""></div>
+</div>
 </body>
 </html>

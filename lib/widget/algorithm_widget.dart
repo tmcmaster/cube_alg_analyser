@@ -28,20 +28,31 @@ class AlgorithmWidget extends ConsumerWidget {
                 children: [
                   Wrap(
                     alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Text(
                         algorithm.id.toString(),
-                        style: textTheme.titleLarge?.copyWith(
+                        style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
+                      const SizedBox(width: 8),
                       Text(
                         algorithm.group,
-                        style: textTheme.titleLarge?.copyWith(
+                        style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      IconButton(
+                        onPressed: () {
+                          ref.read(GoRouterMenuApp.goRouter).push(
+                                '/cube',
+                                extra: algorithm.moves,
+                              );
+                        },
+                        icon: const Icon(
+                          Icons.play_arrow,
                         ),
                       ),
                     ],
@@ -49,19 +60,11 @@ class AlgorithmWidget extends ConsumerWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      ref.read(GoRouterMenuApp.goRouter).push(
-                            '/cube',
-                            extra: algorithm.moves,
-                          );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Text(
-                        algorithm.moves,
-                        style: textTheme.titleLarge,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      algorithm.moves,
+                      style: textTheme.titleLarge,
                     ),
                   ),
                 ],

@@ -1,6 +1,6 @@
+import 'package:cube_alg_analyser/screen/cube_page.dart';
 import 'package:cube_alg_analyser/screen/landing_page.dart';
 import 'package:cube_alg_analyser/screen/settings_screen.dart';
-import 'package:cube_alg_analyser/screen/test_cube_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -58,7 +58,7 @@ mixin CubeAlgAnaliser {
           icon: FontAwesomeIcons.cube,
           primary: false,
           scaffoldType: ScaffoldType.transparentCard,
-          builder: (context, __, state) => TestCubePage.fromState(state),
+          builder: (context, __, state) => CubePage.fromState(state),
         ),
       ],
     ),

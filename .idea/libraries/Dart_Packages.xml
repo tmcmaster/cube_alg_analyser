@@ -1209,7 +1209,7 @@
         <entry key="wt_app_scaffold">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/git/wt_app_scaffold-8ba466e645918bc76b8c72aed6a0a6f6c18e5d1c//lib" />
+              <option value="$PROJECT_DIR$/../../libraries/wt_app_scaffold/lib" />
             </list>
           </value>
         </entry>
@@ -1267,7 +1267,6 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.pub-cache/git/date_time_picker-c1022f5d8be9ed4ab3fd2d8ee0acdc296c0466eb//lib" />
       <root url="file://$USER_HOME$/.pub-cache/git/wt_action_button-93e2671e35e0e39e81c0f5375fdbb56bf9091a77//lib" />
-      <root url="file://$USER_HOME$/.pub-cache/git/wt_app_scaffold-8ba466e645918bc76b8c72aed6a0a6f6c18e5d1c//lib" />
       <root url="file://$USER_HOME$/.pub-cache/git/wt_firepod-b887a3dfc87eee27808feb67a7c1ec9fbba5d8ad//lib" />
       <root url="file://$USER_HOME$/.pub-cache/git/wt_logging-4c571d7fe00039290ca947caf5ea05ea69f0bfed//lib" />
       <root url="file://$USER_HOME$/.pub-cache/git/wt_models-efb4c055f2759c4688ad308476465aaeae3b4b42//lib" />
@@ -1439,6 +1438,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/xdg_directories-1.0.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/xml-6.3.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/yaml-3.1.2/lib" />
+      <root url="file://$PROJECT_DIR$/../../libraries/wt_app_scaffold/lib" />
       <root url="file://$PROJECT_DIR$/../../libraries/wt_settings/lib" />
       <root url="file:///opt/flutter/bin/cache/pkg/sky_engine/lib" />
       <root url="file:///opt/flutter/packages/flutter/lib" />

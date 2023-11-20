@@ -59,3 +59,5 @@ dev_dependencies:
 dependency_overrides:
   wt_settings:
     path: ../../libraries/wt_settings
+  wt_app_scaffold:
+    path: ../../libraries/wt_app_scaffold

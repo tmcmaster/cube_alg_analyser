@@ -8,6 +8,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_app_scaffold/app_scaffolds.dart';
 import 'package:wt_app_scaffold/models/app_spacing.dart';
 
+class CubingAlgs extends ConsumerStatefulWidget {
+  const CubingAlgs({
+    super.key,
+  });
+
+  @override
+  ConsumerState<CubingAlgs> createState() => _CubingAlgsState();
+}
+
 class _CubingAlgsState extends ConsumerState<CubingAlgs> {
   AlgSort sortBy = AlgSort.id;
 
@@ -28,11 +37,14 @@ class _CubingAlgsState extends ConsumerState<CubingAlgs> {
 
     final spacing = AppSpacing.of(context);
     final textTheme = Theme.of(context).textTheme;
+    // final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SliverPageScaffold(
         pinnedHeader: true,
+        collapsedHeight: 40,
+        tooBarHeight: 40,
         header: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: spacing.small,
@@ -42,11 +54,16 @@ class _CubingAlgsState extends ConsumerState<CubingAlgs> {
             children: [
               Row(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Sort By: ',
-                    style: textTheme.labelLarge,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'Sort By: ',
+                      style: textTheme.labelLarge,
+                    ),
                   ),
+                  const SizedBox(width: 4),
                   SortSelector<AlgSort>(
                     options: AlgSort.values,
                     onChange: (value) {
@@ -88,13 +105,4 @@ class _CubingAlgsState extends ConsumerState<CubingAlgs> {
       ),
     );
   }
-}
-
-class CubingAlgs extends ConsumerStatefulWidget {
-  const CubingAlgs({
-    super.key,
-  });
-
-  @override
-  ConsumerState<CubingAlgs> createState() => _CubingAlgsState();
 }
