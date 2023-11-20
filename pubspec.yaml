@@ -56,8 +56,8 @@ dev_dependencies:
     sdk: flutter
   json_serializable:
 
-dependency_overrides:
-  wt_settings:
-    path: ../../libraries/wt_settings
-  wt_app_scaffold:
-    path: ../../libraries/wt_app_scaffold
+#dependency_overrides:
+#  wt_app_scaffold:
+#    path: ../../libraries/wt_app_scaffold
+#  wt_settings:
+#    path: ../../libraries/wt_settings
