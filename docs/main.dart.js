@@ -49016,9 +49016,9 @@ aN(){var s,r=this
 r.b0()
 s=r.c
 s.toString
-r.d.qX(s,r.gwU(),A.dy("http://localhost:8000/cube/index.html"))},
+r.d.qX(s,r.gwU(),A.dy("https://tmcmaster.github.io/cube_alg_analyser//cube/index.html"))},
 F(a){var s=null
-return A.kF(s,B.v,A.h6(A.b_f(A.dc(new A.Do("http://localhost:8000/cube/index.html?"+this.a.c,s),650,520),B.HM),s,s),s,s,!1,s,s)}}
+return A.kF(s,B.v,A.h6(A.b_f(A.dc(new A.Do("https://tmcmaster.github.io/cube_alg_analyser//cube/index.html?"+this.a.c,s),650,520),B.HM),s,s),s,s,!1,s,s)}}
 A.v1.prototype={
 F(a){return B.a2U}}
 A.wg.prototype={
