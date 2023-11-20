@@ -56,6 +56,10 @@ $.fn.cube = function(options) {
         onComplete: $.noop
     }, options);
 
+    _ref.options = function() {
+        console.log(options);
+    };
+
 	//method for resetting the cube back to its default state
 	_ref.reset = function(){
 
