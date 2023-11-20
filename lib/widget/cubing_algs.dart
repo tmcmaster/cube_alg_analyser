@@ -42,7 +42,7 @@ class _CubingAlgsState extends ConsumerState<CubingAlgs> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SliverPageScaffold(
-        pinnedHeader: true,
+        pinnedHeader: false,
         collapsedHeight: 40,
         tooBarHeight: 40,
         header: Padding(

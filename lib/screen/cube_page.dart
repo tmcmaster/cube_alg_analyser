@@ -26,9 +26,9 @@ class CubePage extends StatefulWidget {
 }
 
 class _CubePageState extends State<CubePage> {
-  static const String baseUrl =
-      'https://tmcmaster.github.io/cube_alg_analyser/';
-  // static const String baseUrl = 'http://localhost:8000';
+  // static const String baseUrl =
+  //     'https://tmcmaster.github.io/cube_alg_analyser/';
+  static const String baseUrl = 'http://localhost:8000';
 
   WebViewController webViewController = WebViewController();
 
