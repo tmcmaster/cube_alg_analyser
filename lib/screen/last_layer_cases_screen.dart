@@ -1,5 +1,5 @@
 import 'package:cube_alg_analyser/model/alg_sort.dart';
-import 'package:cube_alg_analyser/store/alforithm_store.dart';
+import 'package:cube_alg_analyser/store/last_layer_cases_store.dart';
 import 'package:cube_alg_analyser/store/settings_store.dart';
 import 'package:cube_alg_analyser/widget/algorithm_widget.dart';
 import 'package:cube_alg_analyser/widget/sort_selector.dart';
@@ -8,16 +8,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_app_scaffold/app_scaffolds.dart';
 import 'package:wt_app_scaffold/models/app_spacing.dart';
 
-class CubingAlgs extends ConsumerStatefulWidget {
-  const CubingAlgs({
+class LastLayerCasesScreen extends ConsumerStatefulWidget {
+  const LastLayerCasesScreen({
     super.key,
   });
 
   @override
-  ConsumerState<CubingAlgs> createState() => _CubingAlgsState();
+  ConsumerState<LastLayerCasesScreen> createState() => _CubingAlgsState();
 }
 
-class _CubingAlgsState extends ConsumerState<CubingAlgs> {
+class _CubingAlgsState extends ConsumerState<LastLayerCasesScreen> {
   AlgSort sortBy = AlgSort.id;
 
   @override
@@ -28,8 +28,8 @@ class _CubingAlgsState extends ConsumerState<CubingAlgs> {
     final algList = ref
         .watch(
           isAnnotated
-              ? AlgorithmStore.annotatedAlgorithms
-              : AlgorithmStore.algorithms,
+              ? LastLayerCaseStore.annotatedLastLayerCases
+              : LastLayerCaseStore.lastLayerCases,
         )
         .where((alg) => !hideNonAnnotated || alg.isAnnotated)
         .toList()
@@ -97,7 +97,7 @@ class _CubingAlgsState extends ConsumerState<CubingAlgs> {
           children: algList
               .map(
                 (a) => AlgorithmWidget(
-                  algorithm: a,
+                  lastLayerCase: a,
                 ),
               )
               .toList(),

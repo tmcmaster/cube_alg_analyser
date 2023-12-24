@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:cube_alg_analyser/model/rotation.dart';
+import 'package:cube_alg_analyser/service/sequence_finder.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wt_models/wt_models.dart';
 
@@ -11,8 +12,6 @@ part 'algorithm.g.dart';
 class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
   static final convert = DslConvert(
     titles: [
-      'id',
-      'group',
       'moves',
     ],
     jsonToModel: Algorithm.fromJson,
@@ -20,10 +19,7 @@ class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
   );
 
   factory Algorithm({
-    @Default('') String id,
-    @Default('') String group,
     @Default('') String moves,
-    @Default([]) List<int> stickers,
   }) = _Algorithm;
 
   Algorithm._() : super();
@@ -34,10 +30,10 @@ class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
       _$AlgorithmFromJson(json);
 
   @override
-  String getId() => id;
+  String getId() => moves;
 
   @override
-  String getTitle() => '$id : $group';
+  String getTitle() => moves;
 
   @override
   List<String> getTitles() => convert.titles();
@@ -60,5 +56,15 @@ class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
           (move) => rotation.translate(move),
         )
         .join(' ');
+  }
+
+  factory Algorithm.fromString(String algString) {
+    return Algorithm(moves: algString);
+  }
+
+  Algorithm annotate(List<String> sequenceList) {
+    return copyWith(
+      moves: SequenceFinder.replace(moves, sequenceList),
+    );
   }
 }

@@ -1,15 +1,15 @@
-import 'package:cube_alg_analyser/model/algorithm.dart';
+import 'package:cube_alg_analyser/model/last_layer_case.dart';
 import 'package:cube_alg_analyser/widget/sticker_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wt_app_scaffold/app_scaffolds.dart';
 
 class AlgorithmWidget extends ConsumerWidget {
-  final Algorithm algorithm;
+  final LastLayerCase lastLayerCase;
 
   const AlgorithmWidget({
     super.key,
-    required this.algorithm,
+    required this.lastLayerCase,
   });
 
   @override
@@ -31,14 +31,14 @@ class AlgorithmWidget extends ConsumerWidget {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Text(
-                        algorithm.id.toString(),
+                        lastLayerCase.id.toString(),
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        algorithm.group,
+                        lastLayerCase.group,
                         style: textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -48,7 +48,7 @@ class AlgorithmWidget extends ConsumerWidget {
                         onPressed: () {
                           ref.read(GoRouterMenuApp.goRouter).push(
                                 '/cube',
-                                extra: algorithm.moves,
+                                extra: lastLayerCase.moves,
                               );
                         },
                         icon: const Icon(
@@ -63,7 +63,7 @@ class AlgorithmWidget extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
-                      algorithm.moves,
+                      lastLayerCase.moves,
                       style: textTheme.titleLarge,
                     ),
                   ),
@@ -77,7 +77,7 @@ class AlgorithmWidget extends ConsumerWidget {
           SizedBox(
             height: double.infinity,
             child: StickerCase(
-              stickers: algorithm.stickers,
+              stickers: lastLayerCase.stickers,
             ),
           ),
         ],

@@ -1,5 +1,5 @@
 import 'package:cube_alg_analyser/screen/cube_page.dart';
-import 'package:cube_alg_analyser/screen/landing_page.dart';
+import 'package:cube_alg_analyser/screen/last_layer_cases_screen.dart';
 import 'package:cube_alg_analyser/screen/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,10 +38,10 @@ mixin CubeAlgAnaliser {
       applicationType: ApplicationType.goRouterMenu,
       pages: [
         PageDefinition(
-          title: 'Algorithms',
+          title: 'Cases',
           icon: Icons.abc,
           debug: false,
-          builder: (_, __, ___) => const LandingPage(),
+          builder: (_, __, ___) => const LastLayerCasesScreen(),
           primary: true,
           scaffoldType: ScaffoldType.transparentCard,
         ),

@@ -1,4 +1,4 @@
-// import 'package:cube_alg_analyser/model/algorithm.dart';
+// import 'package:cube_alg_analyser/model/last_layer_case.dart';
 // import 'package:cube_alg_analyser/service/sequence_finder.dart';
 // import 'package:flutter/services.dart';
 //
