@@ -80,7 +80,7 @@
   {
     "id": "24",
     "group": "Cross",
-    "algorithms": ["r U R' U' r' F R F'"],
+    "algorithms": ["r U R' U' . r' F R F'"],
     "stickers": [0,4,3,7,3,4,0]
   },
   {
@@ -104,7 +104,7 @@
   {
     "id": "1",
     "group": "Dot",
-    "algorithms": ["R U2 R2 F R F' U2 R' F R F'"],
+    "algorithms": ["R U2 R2 F . R F' U2 . R' F R F'"],
     "stickers": [7,2,0,2,0,2,7]
   },
   {
@@ -321,7 +321,7 @@
     "id": "33",
     "group": "T Shape",
     "algorithms": ["R U R' U' R' F R F'"],
-    "stickers": [2,5,2,3,0,7,0]
+    "stickers": [0,6,1,7,1,6,0]
   },
   {
     "id": "45",

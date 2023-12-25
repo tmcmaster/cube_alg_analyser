@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:cube_alg_analyser/model/algorithm.dart';
-import 'package:cube_alg_analyser/model/rotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wt_models/wt_models.dart';
 
@@ -24,7 +23,7 @@ class LastLayerCase extends BaseModel<LastLayerCase> with _$LastLayerCase {
     @Default('') String id,
     @Default('') String group,
     @Default([])
-    @JsonKey(fromJson: LastLayerCase.jsonToAlgorithms)
+    @JsonKey(fromJson: Algorithm.jsonToAlgorithms)
     List<Algorithm> algorithms,
     @Default([]) List<int> stickers,
   }) = _LastLayerCase;
@@ -44,25 +43,6 @@ class LastLayerCase extends BaseModel<LastLayerCase> with _$LastLayerCase {
 
   @override
   List<String> getTitles() => convert.titles();
-
-  static List<Algorithm> jsonToAlgorithms(dynamic algStrings) {
-    return algStrings is List
-        ? algStrings
-            .map(
-              (algString) => Algorithm(moves: algString.toString()),
-            )
-            .toList()
-        : [];
-  }
-
-  String get moves => algorithms.isEmpty ? '' : algorithms[0].moves;
-
-  bool get isAnnotated => algorithms.isNotEmpty && algorithms[0].isAnnotated;
-
-  String get reverse => algorithms.isEmpty ? '' : algorithms[0].reverse;
-
-  String rotate(Rotation rotation) =>
-      algorithms.isEmpty ? '' : algorithms[0].rotate(rotation);
 
   LastLayerCase annotate(List<String> sequenceList) {
     return copyWith(

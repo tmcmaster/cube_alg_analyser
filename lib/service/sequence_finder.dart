@@ -22,7 +22,7 @@ class SequenceFinder {
     final sampleCountMap = <String, int>{};
 
     for (final alg in algList) {
-      final moves = alg.moves.split(' ');
+      final moves = alg.movesString.split(' ');
       for (int i = 0; i < moves.length - sequenceLength; i++) {
         final sequence = moves.sublist(i, i + sequenceLength).join(' ');
         sampleCountMap[sequence] = (sampleCountMap[sequence] ?? 0) + 1;

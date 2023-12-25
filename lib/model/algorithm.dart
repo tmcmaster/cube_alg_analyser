@@ -2,45 +2,17 @@
 
 import 'package:cube_alg_analyser/model/rotation.dart';
 import 'package:cube_alg_analyser/service/sequence_finder.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:wt_models/wt_models.dart';
 
-part 'algorithm.freezed.dart';
-part 'algorithm.g.dart';
+class Algorithm {
+  final List<List<String>> moves;
 
-@freezed
-class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
-  static final convert = DslConvert(
-    titles: [
-      'moves',
-    ],
-    jsonToModel: Algorithm.fromJson,
-    none: Algorithm.empty(),
-  );
+  Algorithm._(List<List<String>> moves) : moves = moves;
 
-  factory Algorithm({
-    @Default('') String moves,
-  }) = _Algorithm;
+  String get movesString => moves.map((m) => m.join(' ')).join(' ');
 
-  Algorithm._() : super();
+  bool get isAnnotated => movesString.contains('[');
 
-  factory Algorithm.empty() => Algorithm();
-
-  factory Algorithm.fromJson(Map<String, dynamic> json) =>
-      _$AlgorithmFromJson(json);
-
-  @override
-  String getId() => moves;
-
-  @override
-  String getTitle() => moves;
-
-  @override
-  List<String> getTitles() => convert.titles();
-
-  bool get isAnnotated => moves.contains('[');
-
-  String get reverse => moves
+  String get reverse => movesString
       .split(' ')
       .reversed
       .map(
@@ -50,7 +22,7 @@ class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
       .join(' ');
 
   String rotate(Rotation rotation) {
-    return moves
+    return movesString
         .split(' ')
         .map(
           (move) => rotation.translate(move),
@@ -59,12 +31,33 @@ class Algorithm extends BaseModel<Algorithm> with _$Algorithm {
   }
 
   factory Algorithm.fromString(String algString) {
-    return Algorithm(moves: algString);
+    return Algorithm._(
+      algString
+          .split(' . ')
+          .map(
+            (e) => e.split(' ').toList(),
+          )
+          .toList(),
+    );
   }
 
   Algorithm annotate(List<String> sequenceList) {
-    return copyWith(
-      moves: SequenceFinder.replace(moves, sequenceList),
+    return Algorithm.fromString(
+      SequenceFinder.replace(movesString, sequenceList),
     );
+  }
+
+  static List<Algorithm> jsonToAlgorithms(dynamic algStrings) {
+    return algStrings is List
+        ? algStrings
+            .map(
+              (algString) => Algorithm.fromString(algString.toString()),
+            )
+            .toList()
+        : [];
+  }
+
+  String toJson() {
+    return moves.map((m) => m.join(' ')).join(' . ');
   }
 }
