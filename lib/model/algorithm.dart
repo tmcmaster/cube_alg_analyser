@@ -6,7 +6,7 @@ import 'package:cube_alg_analyser/service/sequence_finder.dart';
 class Algorithm {
   final List<List<String>> moves;
 
-  Algorithm._(List<List<String>> moves) : moves = moves;
+  Algorithm._(this.moves);
 
   String get movesString => moves.map((m) => m.join(' ')).join(' ');
 

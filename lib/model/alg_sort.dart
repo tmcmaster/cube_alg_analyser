@@ -3,7 +3,8 @@ import 'package:wt_models/wt_models.dart';
 
 enum AlgSort with TitleSupport {
   id('Number', _compareId),
-  group('Group', _compareGroup);
+  group('Group', _compareGroup),
+  set('Set', _compareSet);
 
   final String title;
   final int Function(LastLayerCase a, LastLayerCase b)? comparator;
@@ -15,6 +16,9 @@ enum AlgSort with TitleSupport {
 
   static int _compareGroup(LastLayerCase a, LastLayerCase b) =>
       a.group.compareTo(b.group);
+
+  static int _compareSet(LastLayerCase a, LastLayerCase b) =>
+      a.set.compareTo(b.set);
 
   @override
   String getTitle() => title;

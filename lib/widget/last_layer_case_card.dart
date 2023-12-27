@@ -1,5 +1,6 @@
-import 'package:cube_alg_analyser/model/algorithm.dart';
 import 'package:cube_alg_analyser/model/last_layer_case.dart';
+import 'package:cube_alg_analyser/widget/algorithm_widget.dart';
+import 'package:cube_alg_analyser/widget/responsive_card.dart';
 import 'package:cube_alg_analyser/widget/sticker_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,9 +45,11 @@ class LastLayerCaseCard extends ConsumerWidget {
               ),
             ],
           ),
-          subtitle: LastLayerAlgorithmWidget(
-            algorithm: lastLayerCase.algorithms.first,
-          ),
+          subtitle: lastLayerCase.algorithms.isEmpty
+              ? null
+              : AlgorithmWidget(
+                  algorithm: lastLayerCase.algorithms.first,
+                ),
           picture: SizedBox(
             height: 150,
             child: StickerCase(
@@ -54,171 +57,26 @@ class LastLayerCaseCard extends ConsumerWidget {
             ),
           ),
           actions: [
-            Text(
-              lastLayerCase.group,
-              style: textTheme.titleMedium,
-            ),
+            Column(
+              children: [
+                if (lastLayerCase.name != lastLayerCase.set)
+                  Text(
+                    lastLayerCase.name,
+                    style: textTheme.titleMedium,
+                  ),
+                Text(
+                  lastLayerCase.set,
+                  style: textTheme.titleMedium,
+                ),
+                Text(
+                  lastLayerCase.group,
+                  style: textTheme.titleMedium,
+                ),
+              ],
+            )
           ],
         ),
       ),
-    );
-  }
-}
-
-class ResponsiveCard extends StatelessWidget {
-  final Widget? picture;
-  final Widget? title;
-  final Widget? subtitle;
-  final List<Widget>? tags;
-  final List<Widget>? actions;
-  final Axis orientation;
-
-  const ResponsiveCard({
-    super.key,
-    this.picture,
-    this.title,
-    this.subtitle,
-    this.actions,
-    this.tags,
-    this.orientation = Axis.vertical,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return orientation == Axis.vertical
-        ? VerticalCard(
-            header: title,
-            leading: subtitle,
-            body: picture,
-            trailing: tags == null
-                ? null
-                : Wrap(
-                    alignment: WrapAlignment.center,
-                    children: tags!,
-                  ),
-            footer: actions == null
-                ? null
-                : Wrap(
-                    alignment: WrapAlignment.spaceAround,
-                    children: actions!,
-                  ),
-          )
-        : HorizontalCard(
-            header: title,
-            leading: picture,
-            body: subtitle,
-            trailing: tags == null
-                ? null
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: tags!,
-                  ),
-            footer: actions == null
-                ? null
-                : Wrap(
-                    alignment: WrapAlignment.spaceAround,
-                    children: actions!,
-                  ),
-          );
-  }
-}
-
-class HorizontalCard extends StatelessWidget {
-  final Widget? header;
-  final Widget? body;
-  final Widget? footer;
-  final Widget? leading;
-  final Widget? trailing;
-
-  const HorizontalCard({
-    super.key,
-    this.header,
-    this.body,
-    this.footer,
-    this.leading,
-    this.trailing,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        if (leading != null) leading!,
-        if (body != null || header != null || footer != null)
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (header != null) header!,
-                if (body != null) body!,
-                if (footer != null) footer!,
-              ],
-            ),
-          ),
-        if (trailing != null) trailing!,
-      ],
-    );
-  }
-}
-
-class VerticalCard extends StatelessWidget {
-  final Widget? header;
-  final Widget? body;
-  final Widget? footer;
-  final Widget? leading;
-  final Widget? trailing;
-
-  const VerticalCard({
-    super.key,
-    this.header,
-    this.body,
-    this.footer,
-    this.leading,
-    this.trailing,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (header != null) header!,
-          if (leading != null) leading!,
-          if (body != null) body!,
-          if (trailing != null) trailing!,
-          if (footer != null) footer!,
-        ],
-      ),
-    );
-  }
-}
-
-class LastLayerAlgorithmWidget extends StatelessWidget {
-  final Algorithm algorithm;
-
-  const LastLayerAlgorithmWidget({
-    super.key,
-    required this.algorithm,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: algorithm.moves
-          .map(
-            (m) => Text(
-              m.join(' '),
-              style: textTheme.titleMedium,
-            ),
-          )
-          .toList(),
     );
   }
 }

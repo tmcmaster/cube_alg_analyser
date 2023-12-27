@@ -12,8 +12,9 @@ class LastLayerCase extends BaseModel<LastLayerCase> with _$LastLayerCase {
   static final convert = DslConvert(
     titles: [
       'id',
+      'name',
+      'set',
       'group',
-      'moves',
     ],
     jsonToModel: LastLayerCase.fromJson,
     none: LastLayerCase.empty(),
@@ -21,6 +22,8 @@ class LastLayerCase extends BaseModel<LastLayerCase> with _$LastLayerCase {
 
   factory LastLayerCase({
     @Default('') String id,
+    @Default('') String name,
+    @Default('') String set,
     @Default('') String group,
     @Default([])
     @JsonKey(fromJson: Algorithm.jsonToAlgorithms)
