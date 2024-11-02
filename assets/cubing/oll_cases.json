@@ -12,7 +12,7 @@
     "name": "Dot",
     "set": "Double Antisune",
     "group": "Dot",
-    "algorithms": ["R U2 R2 F . R F' U2 . R' F R F'"],
+    "algorithms": ["R U2 R2 F R F' U2 . R' F R F'"],
     "stickers": [7,2,0,2,0,2,7]
   },
   {
@@ -58,7 +58,7 @@
   {
     "id": "7",
     "name": "Fat Sune",
-    "set": "Antisune",
+    "set": "Sune",
     "group": "Small Lightning Bolt",
     "algorithms": ["r U R' U R U2 r'"],
     "stickers": [0,4,2,6,4,3,6]
