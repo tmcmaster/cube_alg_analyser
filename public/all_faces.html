@@ -144,8 +144,21 @@
     <button onclick="rotateAndDisplayRightClockwise()">R</button>
     <button onclick="rotateAndDisplayRightAnticlockwise()">R'</button>
 </div>
+<div class="button-bar">
+    <button onclick="resetCube()">Reset</button>
+    <button onclick="test()">J-Perm</button>
+</div>
 
 <script>
+    const solvedCube = {
+        front: [["R1", "R2"], ["R3", "R4"]],
+        back: [["O1", "O2"], ["O3", "O4"]],
+        left: [["B1", "B2"], ["B3", "B4"]],
+        right: [["G1", "G2"], ["G3", "G4"]],
+        top: [["Y1", "Y2"], ["Y3", "Y4"]],
+        bottom: [["W1", "W2"], ["W3", "W4"]]
+    };
+
     let cube = {
         front: [["R1", "R2"], ["R3", "R4"]],
         back: [["O1", "O2"], ["O3", "O4"]],
@@ -154,6 +167,58 @@
         top: [["Y1", "Y2"], ["Y3", "Y4"]],
         bottom: [["W1", "W2"], ["W3", "W4"]]
     };
+
+    const rotationMap = {
+        "U": rotateTopClockwise,
+        "U'": rotateTopAnticlockwise,
+        "D": rotateBottomClockwise,
+        "D'": rotateBottomAnticlockwise,
+        'F': rotateFrontClockwise,
+        "F'": rotateFrontAnticlockwise,
+        "B": rotateBackClockwise,
+        "B'": rotateBackAnticlockwise,
+        "L": rotateLeftClockwise,
+        "L'": rotateLeftAnticlockwise,
+        "R": rotateRightClockwise,
+        "R'": rotateRightAnticlockwise,
+    };
+
+    function test() {
+        executeAlgorithm("R U R' F' R U R' U' R' F R2 U' R' U'");
+    }
+
+    function resetCube() {
+        cube = JSON.parse(JSON.stringify(solvedCube));
+        displayCube(cube);
+    }
+
+    function executeAlgorithm(algorithm) {
+        const moves = algorithm.split(" ");
+
+        console.log('Moves:', moves);
+        for (let move of moves) {
+            console.log('Move:', move);
+            if (move.endsWith("2")) {
+                const rotationFunction = rotationMap[move[0]];
+                if (rotationFunction) {
+                    rotationFunction(cube);
+                    rotationFunction(cube);
+                } else {
+                    console.log(`Could not find rotation function: ${move}`);
+                }
+            } else {
+                const rotationFunction = rotationMap[move];
+                if (rotationFunction) {
+                    rotationFunction(cube);
+                } else {
+                    console.log(`Could not find rotation function: ${move}`);
+                }
+            }
+            displayCube(cube);
+        }
+
+        displayCube(cube);
+    }
 
     // works
     function rotateTopClockwise(cube) {
@@ -365,7 +430,7 @@
         return newCube;
     }
 
-    function rotateRightClockwise(cube) {
+    function rotateRightAnticlockwise(cube) {
         const newRight = [
             [cube.right[1][0], cube.right[0][0]],
             [cube.right[1][1], cube.right[0][1]]
@@ -386,7 +451,7 @@
         return newCube;
     }
 
-    function rotateRightAnticlockwise(cube) {
+    function rotateRightClockwise(cube) {
         const newRight = [
             [cube.right[0][1], cube.right[1][1]],
             [cube.right[0][0], cube.right[1][0]]
