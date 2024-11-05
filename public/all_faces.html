@@ -112,11 +112,67 @@
         h2 {
             color: #666;
         }
+
+        .cube-mode.cube-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            transform-style: preserve-3d;
+            perspective: 600px;
+            margin: auto;
+            transform: rotateX(-30deg) rotateY(-45deg);
+            margin-bottom: 160px;
+        }
+
+        .cube-mode > .cube-face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            opacity: 0.8;
+        }
+
+        .cube-mode > .top {
+            transform: rotateX(90deg) translateZ(50px);
+            background-color: rgba(255, 255, 0, 0.8); /* yellow */
+        }
+
+        .cube-mode > .bottom {
+            transform: rotateX(-90deg) translateZ(50px);
+            background-color: rgba(255, 255, 255, 0.8); /* white */
+        }
+
+        .cube-mode > .front {
+            transform: translateZ(50px);
+            background-color: rgba(255, 0, 0, 0.8); /* red */
+        }
+
+        .cube-mode > .back {
+            transform: rotateY(180deg) translateZ(50px);
+            background-color: rgba(255, 165, 0, 0.8); /* orange */
+        }
+
+        .cube-mode > .left {
+            transform: rotateY(-90deg) translateZ(50px);
+            background-color: rgba(0, 0, 255, 0.8); /* blue */
+        }
+
+        .cube-mode > .right {
+            transform: rotateY(90deg) translateZ(50px);
+            background-color: rgba(0, 255, 0, 0.8); /* green */
+        }
+
     </style>
 </head>
 <body>
 <h2>2x2x2 Cube Rotation Test</h2>
-<div class="cube-container" id="cubeDisplay">
+<div class="cube-container cube-mode" id="cubeDisplay">
     <div class="cube-face top"></div>
     <div class="cube-face left"></div>
     <div class="cube-face front"></div>
@@ -397,14 +453,14 @@
 
         const newCube = JSON.parse(JSON.stringify(cube));
 
-        newCube.top[0][0] = cube.back[0][0];
-        newCube.top[1][0] = cube.back[1][0];
+        newCube.top[0][0] = cube.back[0][1];
+        newCube.top[1][0] = cube.back[1][1];
         newCube.front[0][0] = cube.top[0][0];
         newCube.front[1][0] = cube.top[1][0];
         newCube.bottom[0][0] = cube.front[0][0];
         newCube.bottom[1][0] = cube.front[1][0];
-        newCube.back[0][0] = cube.bottom[0][0];
-        newCube.back[1][0] = cube.bottom[1][0];
+        newCube.back[0][1] = cube.bottom[0][0];
+        newCube.back[1][1] = cube.bottom[1][0];
         newCube.left = newLeft;
 
         return newCube;
@@ -421,10 +477,10 @@
         newCube.top[1][0] = cube.front[1][0];
         newCube.front[0][0] = cube.bottom[0][0];
         newCube.front[1][0] = cube.bottom[1][0];
-        newCube.bottom[0][0] = cube.back[0][0];
-        newCube.bottom[1][0] = cube.back[1][0];
-        newCube.back[0][0] = cube.top[0][0];
-        newCube.back[1][0] = cube.top[1][0];
+        newCube.bottom[0][0] = cube.back[0][1];
+        newCube.bottom[1][0] = cube.back[1][1];
+        newCube.back[0][1] = cube.top[0][0];
+        newCube.back[1][1] = cube.top[1][0];
         newCube.left = newLeft;
 
         return newCube;
@@ -437,14 +493,14 @@
         ];
         const newCube = JSON.parse(JSON.stringify(cube));
 
-        newCube.top[0][1] = cube.back[0][1];
-        newCube.top[1][1] = cube.back[1][1];
+        newCube.top[0][1] = cube.back[0][0];
+        newCube.top[1][1] = cube.back[1][0];
         newCube.front[0][1] = cube.top[0][1];
         newCube.front[1][1] = cube.top[1][1];
         newCube.bottom[0][1] = cube.front[0][1];
         newCube.bottom[1][1] = cube.front[1][1];
-        newCube.back[0][1] = cube.bottom[0][1];
-        newCube.back[1][1] = cube.bottom[1][1];
+        newCube.back[0][0] = cube.bottom[0][1];
+        newCube.back[1][0] = cube.bottom[1][1];
 
         newCube.right = newRight;
 
@@ -462,10 +518,10 @@
         newCube.top[1][1] = cube.front[1][1];
         newCube.front[0][1] = cube.bottom[0][1];
         newCube.front[1][1] = cube.bottom[1][1];
-        newCube.bottom[0][1] = cube.back[0][1];
-        newCube.bottom[1][1] = cube.back[1][1];
-        newCube.back[0][1] = cube.top[0][1];
-        newCube.back[1][1] = cube.top[1][1];
+        newCube.bottom[0][1] = cube.back[0][0];
+        newCube.bottom[1][1] = cube.back[1][0];
+        newCube.back[0][0] = cube.top[0][1];
+        newCube.back[1][0] = cube.top[1][1];
 
         newCube.right = newRight;
 
@@ -486,10 +542,10 @@
             const faceDiv = faceElements[face];
             faceDiv.innerHTML = "";
 
-            const title = document.createElement("div");
-            title.className = "face-title";
-            title.textContent = face.charAt(0).toUpperCase() + face.slice(1);
-            faceDiv.appendChild(title);
+            // const title = document.createElement("div");
+            // title.className = "face-title";
+            // title.textContent = face.charAt(0).toUpperCase() + face.slice(1);
+            // faceDiv.appendChild(title);
 
             const grid = document.createElement("div");
             grid.className = "grid";
