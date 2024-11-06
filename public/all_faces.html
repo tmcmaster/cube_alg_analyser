@@ -202,7 +202,8 @@
 </div>
 <div class="button-bar">
     <button onclick="resetCube()">Reset</button>
-    <button onclick="test()">J-Perm</button>
+    <button onclick="jPerm()">J</button>
+    <button onclick="yPerm()">Y</button>
 </div>
 
 <script>
@@ -240,7 +241,15 @@
     };
 
     function test() {
+        jPerm();
+    }
+
+    function jPerm() {
         executeAlgorithm("R U R' F' R U R' U' R' F R2 U' R' U'");
+    }
+
+    function yPerm() {
+        executeAlgorithm("F R U' R' U' R U R' F' R U R' U' R' F R F'");
     }
 
     function resetCube() {
@@ -257,23 +266,28 @@
             if (move.endsWith("2")) {
                 const rotationFunction = rotationMap[move[0]];
                 if (rotationFunction) {
-                    rotationFunction(cube);
-                    rotationFunction(cube);
+                    cube = rotationFunction(cube);
+                    cube = rotationFunction(cube);
                 } else {
                     console.log(`Could not find rotation function: ${move}`);
                 }
             } else {
                 const rotationFunction = rotationMap[move];
                 if (rotationFunction) {
-                    rotationFunction(cube);
+                    cube = rotationFunction(cube);
                 } else {
                     console.log(`Could not find rotation function: ${move}`);
                 }
             }
             displayCube(cube);
+            // await delay(1000);
         }
 
         displayCube(cube);
+    }
+
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     // works
@@ -453,14 +467,14 @@
 
         const newCube = JSON.parse(JSON.stringify(cube));
 
-        newCube.top[0][0] = cube.back[0][1];
-        newCube.top[1][0] = cube.back[1][1];
+        newCube.top[0][0] = cube.back[1][1];
+        newCube.top[1][0] = cube.back[0][1];
         newCube.front[0][0] = cube.top[0][0];
         newCube.front[1][0] = cube.top[1][0];
         newCube.bottom[0][0] = cube.front[0][0];
         newCube.bottom[1][0] = cube.front[1][0];
-        newCube.back[0][1] = cube.bottom[0][0];
-        newCube.back[1][1] = cube.bottom[1][0];
+        newCube.back[0][1] = cube.bottom[1][0];
+        newCube.back[1][1] = cube.bottom[0][0];
         newCube.left = newLeft;
 
         return newCube;
@@ -486,31 +500,10 @@
         return newCube;
     }
 
-    function rotateRightAnticlockwise(cube) {
+    function rotateRightClockwise(cube) {
         const newRight = [
             [cube.right[1][0], cube.right[0][0]],
             [cube.right[1][1], cube.right[0][1]]
-        ];
-        const newCube = JSON.parse(JSON.stringify(cube));
-
-        newCube.top[0][1] = cube.back[0][0];
-        newCube.top[1][1] = cube.back[1][0];
-        newCube.front[0][1] = cube.top[0][1];
-        newCube.front[1][1] = cube.top[1][1];
-        newCube.bottom[0][1] = cube.front[0][1];
-        newCube.bottom[1][1] = cube.front[1][1];
-        newCube.back[0][0] = cube.bottom[0][1];
-        newCube.back[1][0] = cube.bottom[1][1];
-
-        newCube.right = newRight;
-
-        return newCube;
-    }
-
-    function rotateRightClockwise(cube) {
-        const newRight = [
-            [cube.right[0][1], cube.right[1][1]],
-            [cube.right[0][0], cube.right[1][0]]
         ];
         const newCube = JSON.parse(JSON.stringify(cube));
 
@@ -518,10 +511,31 @@
         newCube.top[1][1] = cube.front[1][1];
         newCube.front[0][1] = cube.bottom[0][1];
         newCube.front[1][1] = cube.bottom[1][1];
-        newCube.bottom[0][1] = cube.back[0][0];
-        newCube.bottom[1][1] = cube.back[1][0];
-        newCube.back[0][0] = cube.top[0][1];
-        newCube.back[1][0] = cube.top[1][1];
+        newCube.bottom[1][1] = cube.back[0][0];
+        newCube.bottom[0][1] = cube.back[1][0];
+        newCube.back[1][0] = cube.top[0][1];
+        newCube.back[0][0] = cube.top[1][1];
+
+        newCube.right = newRight;
+
+        return newCube;
+    }
+
+    function rotateRightAnticlockwise(cube) {
+        const newRight = [
+            [cube.right[0][1], cube.right[1][1]],
+            [cube.right[0][0], cube.right[1][0]]
+        ];
+        const newCube = JSON.parse(JSON.stringify(cube));
+
+        newCube.top[1][1] = cube.back[0][0];
+        newCube.top[0][1] = cube.back[1][0];
+        newCube.front[0][1] = cube.top[0][1];
+        newCube.front[1][1] = cube.top[1][1];
+        newCube.bottom[0][1] = cube.front[0][1];
+        newCube.bottom[1][1] = cube.front[1][1];
+        newCube.back[1][0] = cube.bottom[0][1];
+        newCube.back[0][0] = cube.bottom[1][1];
 
         newCube.right = newRight;
 
