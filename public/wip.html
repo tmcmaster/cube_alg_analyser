@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2x2x2 Cube Rotation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .cube-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            transform-style: preserve-3d;
+            perspective: 600px;
+            margin: auto;
+            transform: rotateX(-30deg) rotateY(-45deg);
+            margin-bottom: 160px;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            opacity: 0.8;
+        }
+
+        /* Colors for each face */
+        .top { transform: rotateX(90deg) translateZ(50px); background-color: yellow; }
+        .bottom { transform: rotateX(-90deg) translateZ(50px); background-color: white; }
+        .front { transform: translateZ(50px); background-color: red; }
+        .back { transform: rotateY(180deg) translateZ(50px); background-color: orange; }
+        .left { transform: rotateY(-90deg) translateZ(50px); background-color: blue; }
+        .right { transform: rotateY(90deg) translateZ(50px); background-color: green; }
+
+        /* Buttons */
+        .button-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 8px;
+            justify-content: center;
+        }
+
+        .button-bar button {
+            background-color: #bbb;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button-bar button:hover { background-color: #aaa; transform: scale(1.05); }
+        .button-bar button:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+<h2>2x2x2 Cube Rotation Test</h2>
+<div class="cube-container" id="cubeDisplay">
+    <div class="cube-face top">Top</div>
+    <div class="cube-face left">Left</div>
+    <div class="cube-face front">Front</div>
+    <div class="cube-face right">Right</div>
+    <div class="cube-face bottom">Bottom</div>
+    <div class="cube-face back">Back</div>
+</div>
+
+<!-- Buttons for rotating faces -->
+<div class="button-bar">
+    <button onclick="rotate('U')">U</button>
+    <button onclick="rotate('U\'')">U'</button>
+    <button onclick="rotate('D')">D</button>
+    <button onclick="rotate('D\'')">D'</button>
+    <button onclick="rotate('F')">F</button>
+    <button onclick="rotate('F\'')">F'</button>
+    <button onclick="rotate('B')">B</button>
+    <button onclick="rotate('B\'')">B'</button>
+    <button onclick="rotate('L')">L</button>
+    <button onclick="rotate('L\'')">L'</button>
+    <button onclick="rotate('R')">R</button>
+    <button onclick="rotate('R\'')">R'</button>
+</div>
+<div class="button-bar">
+    <button onclick="resetCube()">Reset</button>
+</div>
+
+<script>
+    // Initialize the cube with colors on each face in a solved state
+    const solvedCube = {
+        front: [["R", "R"], ["R", "R"]],
+        back: [["O", "O"], ["O", "O"]],
+        left: [["B", "B"], ["B", "B"]],
+        right: [["G", "G"], ["G", "G"]],
+        top: [["Y", "Y"], ["Y", "Y"]],
+        bottom: [["W", "W"], ["W", "W"]]
+    };
+    let cube = JSON.parse(JSON.stringify(solvedCube));
+
+    function rotateFace(face, clockwise) {
+        // Rotate the 2x2 grid for the specified face
+        cube[face] = rotate2x2Grid(cube[face], clockwise);
+
+        // Adjust edges based on the rotated face
+        const adjacentEdges = {
+            top: ['back', 'right', 'front', 'left'],
+            bottom: ['front', 'right', 'back', 'left'],
+            front: ['top', 'right', 'bottom', 'left'],
+            back: ['top', 'left', 'bottom', 'right'],
+            left: ['top', 'front', 'bottom', 'back'],
+            right: ['top', 'back', 'bottom', 'front']
+        };
+
+        // Rotate the adjacent edges in the appropriate order
+        rotateEdges(adjacentEdges[face], face, clockwise);
+    }
+
+    function rotate2x2Grid(grid, clockwise) {
+        // Clockwise 90-degree rotation for a 2x2 grid
+        return clockwise
+            ? [[grid[1][0], grid[0][0]], [grid[1][1], grid[0][1]]]
+            : [[grid[0][1], grid[1][1]], [grid[0][0], grid[1][0]]];
+    }
+
+    function rotateEdges(edges, face, clockwise) {
+        // Store edges in order to rotate
+        const edgeRows = edges.map((adjFace, idx) => {
+            if (face === "top" || face === "bottom") return cube[adjFace][face === "top" ? 0 : 1].slice();
+            else if (face === "front" || face === "back") return [cube[adjFace][face === "front" ? 1 : 0][0], cube[adjFace][face === "front" ? 1 : 0][1]];
+            else return idx < 2 ? cube[adjFace][0].slice() : cube[adjFace][1].slice();
+        });
+
+        // Define new order for rotation
+        const newOrder = clockwise ? [3, 0, 1, 2] : [1, 2, 3, 0];
+        newOrder.forEach((newIdx, idx) => {
+            const adjFace = edges[idx];
+            if (face === "top" || face === "bottom") {
+                cube[adjFace][face === "top" ? 0 : 1] = edgeRows[newIdx];
+            } else if (face === "front" || face === "back") {
+                cube[adjFace][face === "front" ? 1 : 0] = [edgeRows[newIdx][0], edgeRows[newIdx][1]];
+            } else {
+                if (idx < 2) cube[adjFace][0] = edgeRows[newIdx];
+                else cube[adjFace][1] = edgeRows[newIdx];
+            }
+        });
+    }
+
+    // Renders the current state of the cube
+    function displayCube() {
+        const faceElements = document.querySelectorAll(".cube-face");
+        faceElements.forEach(face => {
+            const faceName = face.classList[1];
+            face.innerHTML = cube[faceName].map(row => row.join(" ")).join("<br>");
+        });
+    }
+
+    // Cube rotation function triggered by buttons
+    function rotate(face) {
+        const rotationMap = {
+            "U": () => rotateFace("top", true),
+            "U'": () => rotateFace("top", false),
+            "D": () => rotateFace("bottom", true),
+            "D'": () => rotateFace("bottom", false),
+            "F": () => rotateFace("front", true),
+            "F'": () => rotateFace("front", false),
+            "B": () => rotateFace("back", true),
+            "B'": () => rotateFace("back", false),
+            "L": () => rotateFace("left", true),
+            "L'": () => rotateFace("left", false),
+            "R": () => rotateFace("right", true),
+            "R'": () => rotateFace("right", false),
+        };
+        rotationMap[face]();
+        displayCube();
+    }
+
+    function resetCube() {
+        cube = JSON.parse(JSON.stringify(solvedCube));
+        displayCube();
+    }
+
+    displayCube();
+</script>
+
+</body>
+</html>
+
+
